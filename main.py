@@ -391,9 +391,14 @@ def view_expenses():
     
     with col1:
         # Get min and max dates from data
-        min_date = st.session_state.expenses['date'].min().date()
-        max_date = st.session_state.expenses['date'].max().date()
-        
+       
+        # Get min and max dates from data or use defaults
+        if st.session_state.expenses.empty:
+            min_date = datetime.now().date()
+            max_date = datetime.now().date()
+        else:
+            min_date = st.session_state.expenses['date'].min().date()
+            max_date = st.session_state.expenses['date'].max().date()
         # Default to current month
         default_start = datetime(max_date.year, max_date.month, 1).date()
         default_end = max_date
